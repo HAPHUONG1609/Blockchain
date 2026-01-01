@@ -26,6 +26,11 @@ const Events: NextPage = () => {
     eventName: "LiquidityRemoved",
   });
 
+  const { data: approvalEvents, isLoading: isApprovalEventsLoading } = useScaffoldEventHistory({
+    contractName: "Balloons",
+    eventName: "Approval",
+  });
+
   return (
     <>
       <div className="flex items-center flex-col flex-grow pt-10">
@@ -202,6 +207,52 @@ const Events: NextPage = () => {
                         </tr>
                       );
                     })
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {isApprovalEventsLoading ? (
+          <div className="flex justify-center items-center mt-10">
+            <span className="loading loading-spinner loading-lg"></span>
+          </div>
+        ) : (
+          <div className="mt-8 mb-8">
+            <div className="text-center mb-4">
+              <span className="block text-2xl font-bold text-green-600">Approve Events (Balloons)</span>
+            </div>
+            <div className="overflow-x-auto shadow-lg mb-5">
+              <table className="table table-zebra w-full">
+                <thead>
+                  <tr>
+                    <th className="bg-green-600 text-white">Owner</th>
+                    <th className="bg-green-600 text-white">Spender (DEX)</th>
+                    <th className="bg-green-600 text-white">Amount Approved (BAL)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {!approvalEvents || approvalEvents.length === 0 ? (
+                    <tr>
+                      <td colSpan={3} className="text-center">
+                        No approve events yet. Try approving the DEX to spend your BAL!
+                      </td>
+                    </tr>
+                  ) : (
+                    approvalEvents?.map((event, index) => (
+                      <tr key={index} className="hover:bg-green-50">
+                        <td className="text-center">
+                          <Address address={event.args.owner} />
+                        </td>
+                        <td className="text-center">
+                          <Address address={event.args.spender} />
+                        </td>
+                        <td className="text-center font-medium">
+                          {parseFloat(formatEther(event.args.value || 0n)).toFixed(4)} BAL
+                        </td>
+                      </tr>
+                    ))
                   )}
                 </tbody>
               </table>
