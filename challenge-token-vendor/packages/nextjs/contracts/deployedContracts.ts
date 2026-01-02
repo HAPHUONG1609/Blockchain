@@ -557,7 +557,7 @@ const deployedContracts = {
   },
   11155111: {
     Vendor: {
-      address: "0xF77AB3675Acd84f8b96473f0BCd0fadFF81A8160",
+      address: "0x741A99d38322eC112FB6e584fD814C58945De2ED",
       abi: [
         {
           inputs: [
@@ -772,10 +772,10 @@ const deployedContracts = {
         renounceOwnership: "@openzeppelin/contracts/access/Ownable.sol",
         transferOwnership: "@openzeppelin/contracts/access/Ownable.sol",
       },
-      deployedOnBlock: 9951138,
+      deployedOnBlock: 9957226,
     },
     YourToken: {
-      address: "0x2439f00E9911b3A5269561cD23F680727EB625Cb",
+      address: "0x818A1B6c9Aa368053065fDC8dFEf57AD2b9C4087",
       abi: [
         {
           inputs: [],
@@ -1102,7 +1102,7 @@ const deployedContracts = {
         transfer: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
         transferFrom: "@openzeppelin/contracts/token/ERC20/ERC20.sol",
       },
-      deployedOnBlock: 9951135,
+      deployedOnBlock: 9957225,
     },
   },
 } as const;

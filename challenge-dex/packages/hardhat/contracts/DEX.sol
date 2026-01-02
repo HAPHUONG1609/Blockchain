@@ -62,7 +62,7 @@ contract DEX {
      */
     function init(uint256 tokens) public payable returns (uint256) {
         require(totalLiquidity == 0, "DEX: init - already has liquidity");
-        totalLiquidity = address(this).balance; 
+        totalLiquidity = msg.value;
         liquidity[msg.sender] = totalLiquidity;
         require(token.transferFrom(msg.sender, address(this), tokens), "DEX: init - transfer failed");
         return totalLiquidity;
@@ -131,7 +131,8 @@ contract DEX {
             "Token transfer failed"
         );
 
-        payable(msg.sender).transfer(ethOutput);
+        (bool sent, ) = payable(msg.sender).call{value: ethOutput}("");
+        require(sent, "ETH transfer failed");
 
         emit TokenToEthSwap(msg.sender, tokenInput, ethOutput);
     }
@@ -148,7 +149,7 @@ contract DEX {
         uint256 ethReserve = address(this).balance - msg.value;
         uint256 tokenReserve = token.balanceOf(address(this));
 
-        tokensDeposited = (msg.value * tokenReserve / ethReserve) + 1; // phải +1 để tránh làm tròn xuống 0
+        tokensDeposited = (msg.value * tokenReserve) / ethReserve; // phải +1 để tránh làm tròn xuống 0
 
         uint256 liquidityMinted = msg.value * totalLiquidity / ethReserve;
 

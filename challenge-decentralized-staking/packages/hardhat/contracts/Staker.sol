@@ -11,9 +11,10 @@ contract Staker {
     mapping(address => uint256) public balances;
     uint256 public constant threshold = 1 ether;
     event Stake(address staker, uint256 amount);
+    event Withdraw(address indexed staker, uint256 amount);
 
     // ========= CHECKPOINT 2 =========
-    uint256 public deadline = block.timestamp + 72 hours;
+    uint256 public deadline = block.timestamp + 30 seconds;
     bool public openForWithdraw;
     bool public executed;
 
@@ -56,7 +57,7 @@ contract Staker {
     }
 
     // -------- WITHDRAW --------
-    function withdraw() public notCompleted {
+    function withdraw() public {
         require(openForWithdraw, "Withdraw not allowed");
 
         uint256 amount = balances[msg.sender];
@@ -65,6 +66,8 @@ contract Staker {
         balances[msg.sender] = 0;
         (bool sent, ) = payable(msg.sender).call{value: amount}("");
         require(sent, "Failed to send ETH");
+
+        emit Withdraw(msg.sender, amount);
     }
 
     // -------- TIME LEFT --------
@@ -77,6 +80,6 @@ contract Staker {
 
     // -------- RECEIVE ETH --------
     receive() external payable {
-        stake();
+        revert("Use stake()");
     }
 }

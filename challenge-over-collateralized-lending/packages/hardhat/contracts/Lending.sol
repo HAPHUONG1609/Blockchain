@@ -98,7 +98,7 @@ contract Lending is Ownable {
 
         if (borrowedAmount == 0) {
             return type(uint256).max; 
-
+        }
         return (collateralValue * 1e18) / borrowedAmount;
     }
 

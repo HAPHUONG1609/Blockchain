@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   11155111: {
     ExampleExternalContract: {
-      address: "0x9aA9BEce6AE1bcBd178A4721f670Ef420dD26Da6",
+      address: "0x907Ee7Fe2C4Ab781F0e140a9392a893068a37280",
       abi: [
         {
           inputs: [],
@@ -31,10 +31,10 @@ const deployedContracts = {
         },
       ],
       inheritedFunctions: {},
-      deployedOnBlock: 9939542,
+      deployedOnBlock: 9958229,
     },
     Staker: {
-      address: "0x3fBe565d95aa20571277A539fD1eeCA68622dE60",
+      address: "0x5F8457642fF81E1478f3E7cb128D446E1B6a6b62",
       abi: [
         {
           inputs: [
@@ -64,6 +64,25 @@ const deployedContracts = {
             },
           ],
           name: "Stake",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "staker",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "amount",
+              type: "uint256",
+            },
+          ],
+          name: "Withdraw",
           type: "event",
         },
         {
@@ -190,7 +209,7 @@ const deployedContracts = {
         },
       ],
       inheritedFunctions: {},
-      deployedOnBlock: 9944557,
+      deployedOnBlock: 9958283,
     },
   },
 } as const;
